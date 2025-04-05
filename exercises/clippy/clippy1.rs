@@ -1,11 +1,7 @@
-use std::f32::consts::PI;
-
 fn main() {
-    let radius = 5.00_f32;
-    let area = PI * radius.powi(2);
+    const RADIUS: f32 = 5.0;
 
-    println!(
-        "The area of a circle with radius {:.2} is {:.5}!",
-        radius, area
-    );
+    let area = std::f32::consts::PI * RADIUS.powi(2);
+
+    println!("The area of a circle with RADIUS {RADIUS:.2} is {area:.5}");
 }

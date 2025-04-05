@@ -18,21 +18,23 @@
 // your code, while the Rust compiler hands its trust of soundness of your
 // code to yourself! If you cannot prove the memory safety and soundness of
 // your own code, take a step back and use safe code instead!
-//
-// Execute `rustlings hint tests5` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
 
 /// # Safety
 ///
 /// The `address` must contain a mutable reference to a valid `u32` value.
+/// The caller must ensure:
+/// 1. The address points to a properly aligned, valid `u32` value
+/// 2. The memory is not accessed by any other code while this function executes
+/// 3. The memory is writable
 unsafe fn modify_by_address(address: usize) {
-    // TODO: Fill your safety notice of the code block below to match your
-    // code's behavior and the contract of this function. You may use the
-    // comment of the test below as your format reference.
+    // SAFETY:
+    // - The caller has guaranteed the address points to a valid `u32`
+    // - The caller has guaranteed exclusive access to the memory
+    // - We maintain alignment by working with `u32` type
+    // - The pointer is properly reconstructed from the usize address
     unsafe {
-        todo!("Your code goes here")
+        let ptr = address as *mut u32;
+        *ptr = 0xAABBCCDD;
     }
 }
 
@@ -46,6 +48,6 @@ mod tests {
         // SAFETY: The address is guaranteed to be valid and contains
         // a unique reference to a `u32` local variable.
         unsafe { modify_by_address(&mut t as *mut u32 as usize) };
-        assert!(t == 0xAABBCCDD);
+        assert_eq!(t, 0xAABBCCDD);
     }
 }

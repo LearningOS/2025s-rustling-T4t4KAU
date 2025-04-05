@@ -1,28 +1,26 @@
 fn main() {
-    // Fix 1: Remove dangerous unwrap() on None
+    // Fix 1: Safe handling of None
     let my_option: Option<()> = None;
-    if my_option.is_none() {
-        // Instead of unwrapping None (which would panic), 
-        // we can just handle the None case
-        println!("Option is None");
+    match my_option {
+        None => println!("Option is None"),
+        Some(_) => println!("Option has a value"),
     }
 
-    // Fix 2: Add missing commas in array declaration
+    // Fix 2: Proper array formatting
     let my_arr = &[
-        -1, -2, -3,  // Added comma
-        -4, -5, -6   // Added comma
+        -1, -2, -3,
+        -4, -5, -6,
     ];
     println!("My array! Here it is: {:?}", my_arr);
 
-    // Fix 3: Proper way to clear a vector
+    // Fix 3: Proper vector clearing
     let mut my_empty_vec = vec![1, 2, 3, 4, 5];
-    my_empty_vec.clear();  // Use clear() instead of resize()
+    my_empty_vec.clear();
     println!("This Vec is empty, see? {:?}", my_empty_vec);
 
-    // Fix 4: Correct variable swapping
+    // Fix 4: Improved value swapping
     let mut value_a = 45;
     let mut value_b = 66;
-    // Proper way to swap values in Rust
     std::mem::swap(&mut value_a, &mut value_b);
     println!("value a: {}; value b: {}", value_a, value_b);
 }
